@@ -1,0 +1,20 @@
+<%- include('../partials/header', { title: 'Creator studio', active: 'creator' }) %>
+<main class="page">
+    <div class="kicker">
+        <span class="kicker-dot"></span>
+        <span>Creator studio</span>
+    </div>
+    <h1>Compose and ship <span class="highlight">assessments.</span></h1>
+    <p class="lead">Draft custom question sets, configure timers, and submit assessments for admin review.</p>
+    <div class="stats">
+        <div class="stat"><span>Your quizzes</span><strong><%= quizCount %></strong></div>
+        <div class="stat"><span>Pending review</span><strong><%= pendingCount %></strong></div>
+        <div class="stat"><span>Published</span><strong><%= approvedCount %></strong></div>
+        <div class="stat"><span>Workspace</span><strong style="color:var(--accent);">Active</strong></div>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/creator/quizzes/create">New quiz &rarr;</a>
+        <a class="btn secondary" href="/creator/quizzes">My library</a>
+    </div>
+</main>
+<%- include('../partials/footer') %>

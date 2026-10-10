@@ -1,0 +1,50 @@
+<%- include('../partials/header', { title: 'Available quizzes', active: 'quizzes' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Exam hall</span>
+                </div>
+                <h2>Published assessments</h2>
+            </div>
+            <a class="btn secondary" href="/participant/history">Transcript & history &rarr;</a>
+        </div>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Assessment Title</th>
+                    <th>Author</th>
+                    <th>Duration</th>
+                    <th style="text-align:right;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% quizzes.forEach(function(quiz) { %>
+                    <tr>
+                        <td><strong><%= quiz.title %></strong></td>
+                        <td class="muted"><%= quiz.creator ? quiz.creator.name : 'Faculty' %></td>
+                        <td>
+                            <span class="badge" style="font-weight:500;">
+                                ⏱ <%= quiz.duration %> min
+                            </span>
+                        </td>
+                        <td style="text-align:right;">
+                            <a class="btn" href="/quizzes/<%= quiz.id %>/take" style="padding:8px 22px; font-size:13px;">Start exam &rarr;</a>
+                        </td>
+                    </tr>
+                <% }); %>
+                <% if (quizzes.length === 0) { %>
+                    <tr>
+                        <td colspan="4" class="empty">No published assessments right now. Please check back after moderation.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

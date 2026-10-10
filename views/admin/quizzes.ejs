@@ -1,0 +1,68 @@
+<%- include('../partials/header', { title: 'Quiz review', active: 'admin' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Moderation</span>
+                </div>
+                <h2>Quiz catalog & review</h2>
+            </div>
+            <a class="btn secondary" href="/admin/users">Manage users &rarr;</a>
+        </div>
+        <% if (locals.success) { %>
+            <div class="notice ok">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><%= locals.success %></span>
+            </div>
+        <% } %>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Assessment Title</th>
+                    <th>Author</th>
+                    <th>Time Limit</th>
+                    <th>Review Status</th>
+                    <th style="text-align:right;">Decision</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% quizzes.forEach(function(quiz) { %>
+                    <tr>
+                        <td><strong><%= quiz.title %></strong></td>
+                        <td class="muted"><%= quiz.creator ? quiz.creator.name : '—' %></td>
+                        <td class="muted">⏱ <%= quiz.duration %> min</td>
+                        <td>
+                            <span class="badge <%= quiz.status === 'APPROVED' ? 'ok' : (quiz.status === 'REJECTED' ? 'danger' : 'warn') %>">
+                                <%= quiz.status %>
+                            </span>
+                        </td>
+                        <td style="text-align:right;">
+                            <div class="inline-forms" style="justify-content:flex-end;">
+                                <% if (quiz.status !== 'APPROVED') { %>
+                                    <form action="/admin/quizzes/approve/<%= quiz.id %>" method="post" style="display:inline;">
+                                        <button class="btn" type="submit" style="padding:6px 14px; font-size:12px;">Approve</button>
+                                    </form>
+                                <% } %>
+                                <% if (quiz.status !== 'REJECTED') { %>
+                                    <form action="/admin/quizzes/reject/<%= quiz.id %>" method="post" style="display:inline;">
+                                        <button class="btn danger" type="submit" style="padding:6px 14px; font-size:12px;">Reject</button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+                <% if (quizzes.length === 0) { %>
+                    <tr>
+                        <td colspan="5" class="empty">No assessments submitted for moderation yet.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

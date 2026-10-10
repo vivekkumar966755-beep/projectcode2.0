@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Join · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="auth-wrap">
+    <div class="auth-card">
+        <a th:href="@{/}" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:24px; color:var(--text-muted); font-size:13px; font-weight:600;">
+            <span class="brand-mark" style="width:28px; height:28px; font-size:11px; border-radius:8px;">AQ</span>
+            <span>Apex Quiz</span>
+        </a>
+        <div class="kicker">
+            <span class="kicker-dot"></span>
+            <span>Get started</span>
+        </div>
+        <h2>Create your account</h2>
+        <p class="muted">Join as a creator or participant. Admin access is provisioned separately.</p>
+        <div th:if="${error}" class="notice error" th:text="${error}"></div>
+        <form th:action="@{/register}" method="post" th:object="${user}" class="form-grid" style="margin-top:20px;">
+            <div>
+                <label for="name">Full name</label>
+                <input id="name" type="text" th:field="*{name}" placeholder="Alex Morgan" required/>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" placeholder="alex@company.com" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input id="password" type="password" th:field="*{password}" minlength="6" placeholder="••••••••" required/>
+            </div>
+            <div>
+                <label for="role">Role</label>
+                <select id="role" th:field="*{role}">
+                    <option value="PARTICIPANT">Participant</option>
+                    <option value="CREATOR">Creator</option>
+                </select>
+            </div>
+            <button class="btn" type="submit" style="width:100%; margin-top:8px;">Create account &rarr;</button>
+        </form>
+        <p class="muted" style="margin-top:24px; text-align:center; font-size:14px;">
+            Already registered? <a th:href="@{/login}" style="font-weight:600;">Sign in</a>
+        </p>
+    </div>
+</body>
+</html>

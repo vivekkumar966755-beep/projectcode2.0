@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Notice · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+    </nav>
+</header>
+<main class="page">
+    <div class="card" style="text-align:center; max-width:540px; margin:auto; padding:48px 32px;">
+        <div class="kicker">
+            <span class="kicker-dot" style="background:var(--danger);"></span>
+            <span style="color:var(--danger);">Notice</span>
+        </div>
+        <h2>Something interrupted this request.</h2>
+        <p class="lead" style="font-size:15px; margin-top:8px;">Return to a safe page and continue.</p>
+        <div class="actions" style="justify-content:center; margin-top:28px;">
+            <a class="btn" th:href="@{/}">&larr; Return to Home</a>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

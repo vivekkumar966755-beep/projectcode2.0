@@ -1,0 +1,26 @@
+<%- include('../partials/header', { title: 'Create quiz', active: 'creator' }) %>
+<main class="page">
+    <div class="card" style="max-width:620px; margin:auto;">
+        <div class="kicker">
+            <span class="kicker-dot"></span>
+            <span>New assessment</span>
+        </div>
+        <h2>Create a quiz</h2>
+        <p class="muted">After saving, you can add questions. The quiz will be reviewed by an administrator before appearing in the exam hall.</p>
+        <form action="/creator/quizzes/create" method="post" class="form-grid" style="margin-top:24px;">
+            <div>
+                <label for="title">Assessment title</label>
+                <input id="title" type="text" name="title" required placeholder="e.g. Spring Boot & Microservices Mastery"/>
+            </div>
+            <div>
+                <label for="duration">Allowed duration (minutes)</label>
+                <input id="duration" type="number" name="duration" min="1" max="180" required value="15"/>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:8px;">
+                <button class="btn" type="submit">Save and add questions &rarr;</button>
+                <a class="btn secondary" href="/creator/dashboard">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('../partials/footer') %>

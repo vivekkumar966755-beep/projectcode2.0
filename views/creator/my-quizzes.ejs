@@ -1,0 +1,50 @@
+<%- include('../partials/header', { title: 'My quizzes', active: 'creator' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Library</span>
+                </div>
+                <h2>Quizzes you authored</h2>
+            </div>
+            <a class="btn" href="/creator/quizzes/create">+ Create quiz &rarr;</a>
+        </div>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Assessment Title</th>
+                    <th>Duration</th>
+                    <th>Moderation Status</th>
+                    <th style="text-align:right;">Question Builder</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% quizzes.forEach(function(quiz) { %>
+                    <tr>
+                        <td><strong><%= quiz.title %></strong></td>
+                        <td class="muted">⏱ <%= quiz.duration %> min</td>
+                        <td>
+                            <span class="badge <%= quiz.status === 'APPROVED' ? 'ok' : (quiz.status === 'REJECTED' ? 'danger' : 'warn') %>">
+                                <%= quiz.status %>
+                            </span>
+                        </td>
+                        <td style="text-align:right;">
+                            <a class="btn ghost" href="/creator/quizzes/<%= quiz.id %>/add-questions" style="padding:6px 16px; font-size:12px;">Manage questions &rarr;</a>
+                        </td>
+                    </tr>
+                <% }); %>
+                <% if (quizzes.length === 0) { %>
+                    <tr>
+                        <td colspan="4" class="empty">You have not created a quiz yet. Click "+ Create quiz" to author your first assessment.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Quiz review · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/quizzes}">Quizzes</a>
+        <a class="active" th:href="@{/admin/dashboard}">Admin</a>
+        <a th:href="@{/creator/dashboard}">Creator</a>
+        <a th:href="@{/participant/history}">History</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button class="linkish" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Moderation</span>
+                </div>
+                <h2>Quiz catalog</h2>
+            </div>
+            <a class="btn secondary" th:href="@{/admin/users}">Users &rarr;</a>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Creator</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="quiz : ${quizzes}">
+                    <td><strong th:text="${quiz.title}">Title</strong></td>
+                    <td class="muted" th:text="${quiz.creator != null ? quiz.creator.name : '—'}">Creator</td>
+                    <td class="muted"><span th:text="${quiz.duration}">15</span> min</td>
+                    <td>
+                        <span class="badge" th:classappend="${quiz.status.name() == 'APPROVED' ? 'ok' : (quiz.status.name() == 'REJECTED' ? 'danger' : 'warn')}" th:text="${quiz.status}">STATUS</span>
+                    </td>
+                    <td style="text-align:right;">
+                        <div class="inline-forms" style="justify-content:flex-end;">
+                            <form th:action="@{'/admin/quizzes/approve/' + ${quiz.id}}" method="post" style="display:inline;">
+                                <button class="btn" type="submit" style="padding:6px 14px; font-size:12px;">Approve</button>
+                            </form>
+                            <form th:action="@{'/admin/quizzes/reject/' + ${quiz.id}}" method="post" style="display:inline;">
+                                <button class="btn danger" type="submit" style="padding:6px 14px; font-size:12px;">Reject</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(quizzes)}">
+                    <td colspan="5" class="empty">No quizzes submitted yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

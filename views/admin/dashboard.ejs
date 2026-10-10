@@ -1,0 +1,20 @@
+<%- include('../partials/header', { title: 'Admin', active: 'admin' }) %>
+<main class="page">
+    <div class="kicker">
+        <span class="kicker-dot"></span>
+        <span>Administration</span>
+    </div>
+    <h1>Control <span class="highlight">room</span></h1>
+    <p class="lead">Monitor the catalog, users, and assessment throughput across all roles.</p>
+    <div class="stats">
+        <div class="stat"><span>Total users</span><strong><%= userCount %></strong></div>
+        <div class="stat"><span>Pending review</span><strong><%= pendingCount %></strong></div>
+        <div class="stat"><span>Published</span><strong><%= approvedCount %></strong></div>
+        <div class="stat"><span>Total attempts</span><strong><%= resultCount %></strong></div>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/admin/users">Manage users &rarr;</a>
+        <a class="btn secondary" href="/admin/quizzes">Review quizzes</a>
+    </div>
+</main>
+<%- include('../partials/footer') %>

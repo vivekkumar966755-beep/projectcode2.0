@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Add questions · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/quizzes}">Quizzes</a>
+        <a class="active" th:href="@{/creator/dashboard}">Creator</a>
+        <a th:href="@{/participant/history}">History</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button class="linkish" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Question bank</span>
+                </div>
+                <h2>Questions for <span th:text="${quiz.title}">Quiz</span></h2>
+            </div>
+            <a class="btn secondary" th:href="@{/creator/my-quizzes}">&larr; Library</a>
+        </div>
+        <form th:action="@{'/creator/quizzes/' + ${quiz.id} + '/add-questions'}" method="post" th:object="${question}" class="form-grid">
+            <div>
+                <label for="questionText">Question</label>
+                <input id="questionText" type="text" th:field="*{questionText}" required placeholder="What does @Transactional do?"/>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div>
+                    <label for="optionA">Option A</label>
+                    <input id="optionA" type="text" th:field="*{optionA}" required/>
+                </div>
+                <div>
+                    <label for="optionB">Option B</label>
+                    <input id="optionB" type="text" th:field="*{optionB}" required/>
+                </div>
+                <div>
+                    <label for="optionC">Option C</label>
+                    <input id="optionC" type="text" th:field="*{optionC}" required/>
+                </div>
+                <div>
+                    <label for="optionD">Option D</label>
+                    <input id="optionD" type="text" th:field="*{optionD}" required/>
+                </div>
+            </div>
+            <div>
+                <label for="correctoption">Correct option</label>
+                <select id="correctoption" th:field="*{correctoption}" required>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+            <div>
+                <button class="btn" type="submit">+ Add question</button>
+            </div>
+        </form>
+        <h3 style="margin-top:36px; padding-top:24px; border-top:1px solid var(--glass-border-subtle);">Added so far (<span th:text="${#lists.size(questions)}">0</span>)</h3>
+        <div th:each="q, iter : ${questions}" class="question-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <p style="margin:0 0 8px;"><strong><span th:text="${iter.count}">1</span>. <span th:text="${q.questionText}">Question</span></strong></p>
+                <span class="badge ok">Correct: <span th:text="${q.correctoption}">A</span></span>
+            </div>
+            <p class="muted" style="margin:0; font-size:13px;">
+                A) <span th:text="${q.optionA}">Option A</span> ·
+                B) <span th:text="${q.optionB}">Option B</span> ·
+                C) <span th:text="${q.optionC}">Option C</span> ·
+                D) <span th:text="${q.optionD}">Option D</span>
+            </p>
+        </div>
+        <p th:if="${#lists.isEmpty(questions)}" class="empty">No questions yet.</p>
+        <div class="actions" style="margin-top:24px;">
+            <a class="btn" th:href="@{/creator/dashboard}">Finish & return to studio &rarr;</a>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

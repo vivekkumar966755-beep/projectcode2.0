@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Users · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/quizzes}">Quizzes</a>
+        <a class="active" th:href="@{/admin/dashboard}">Admin</a>
+        <a th:href="@{/creator/dashboard}">Creator</a>
+        <a th:href="@{/participant/history}">History</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button class="linkish" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Directory</span>
+                </div>
+                <h2>People on the platform</h2>
+            </div>
+            <a class="btn secondary" th:href="@{/admin/dashboard}">&larr; Dashboard</a>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${users}">
+                    <td><strong th:text="${u.name}">Name</strong></td>
+                    <td class="muted" th:text="${u.email}">email@domain.com</td>
+                    <td>
+                        <span class="badge" th:classappend="${u.role.name() == 'ADMIN' ? 'ok' : (u.role.name() == 'CREATOR' ? 'warn' : '')}" th:text="${u.role}">ROLE</span>
+                    </td>
+                    <td style="text-align:right;">
+                        <form th:action="@{'/admin/users/delete/' + ${u.id}}" method="post" onsubmit="return confirm('Remove this user?');" style="display:inline;">
+                            <button class="btn danger" type="submit" style="padding:6px 14px; font-size:12px;">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="4" class="empty">No users found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

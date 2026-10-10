@@ -1,0 +1,76 @@
+<%- include('../partials/header', { title: 'Add questions', active: 'creator' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Question bank</span>
+                </div>
+                <h2>Questions for <%= quiz.title %></h2>
+            </div>
+            <a class="btn secondary" href="/creator/my-quizzes">&larr; My Library</a>
+        </div>
+        <% if (locals.success) { %>
+            <div class="notice ok"><%= locals.success %></div>
+        <% } %>
+        <form action="/creator/quizzes/<%= quiz.id %>/add-questions" method="post" class="form-grid">
+            <div>
+                <label for="questionText">Question prompt</label>
+                <input id="questionText" type="text" name="questionText" required placeholder="e.g. Which annotation marks a class as a Spring Bean?"/>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div>
+                    <label for="optionA">Option A</label>
+                    <input id="optionA" type="text" name="optionA" required placeholder="Choice A"/>
+                </div>
+                <div>
+                    <label for="optionB">Option B</label>
+                    <input id="optionB" type="text" name="optionB" required placeholder="Choice B"/>
+                </div>
+                <div>
+                    <label for="optionC">Option C</label>
+                    <input id="optionC" type="text" name="optionC" required placeholder="Choice C"/>
+                </div>
+                <div>
+                    <label for="optionD">Option D</label>
+                    <input id="optionD" type="text" name="optionD" required placeholder="Choice D"/>
+                </div>
+            </div>
+            <div>
+                <label for="correctoption">Correct answer</label>
+                <select id="correctoption" name="correctoption" required>
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                </select>
+            </div>
+            <div>
+                <button class="btn" type="submit">+ Add question to quiz</button>
+            </div>
+        </form>
+        <h3 style="margin-top:36px; padding-top:24px; border-top:1px solid var(--line);">Added questions (<%= questions.length %>)</h3>
+        <% questions.forEach(function(question, index) { %>
+            <div class="question-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <p style="margin:0 0 8px;"><strong><%= (index + 1) %>. <%= question.questionText %></strong></p>
+                    <span class="badge ok">Correct: <%= question.correctOption %></span>
+                </div>
+                <p class="muted" style="margin:0; font-size:13px;">
+                    <strong>A:</strong> <%= question.optionA %> &nbsp;|&nbsp;
+                    <strong>B:</strong> <%= question.optionB %> &nbsp;|&nbsp;
+                    <strong>C:</strong> <%= question.optionC %> &nbsp;|&nbsp;
+                    <strong>D:</strong> <%= question.optionD %>
+                </p>
+            </div>
+        <% }); %>
+        <% if (questions.length === 0) { %>
+            <p class="empty">No questions added yet. Fill out the form above to build the exam.</p>
+        <% } %>
+        <div class="actions" style="margin-top:24px;">
+            <a class="btn" href="/creator/dashboard">Complete & return to dashboard &rarr;</a>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

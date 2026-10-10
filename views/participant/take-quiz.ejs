@@ -1,0 +1,50 @@
+<%- include('../partials/header', { title: 'Take quiz', active: 'quizzes' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Timed attempt</span>
+                </div>
+                <h2><%= quiz.title %></h2>
+            </div>
+            <div class="timer-pill">
+                <span class="muted" style="font-size:13px;">Time left:</span>
+                <strong data-duration-minutes="<%= quiz.duration %>">--:--</strong>
+            </div>
+        </div>
+        <form action="/quizzes/<%= quiz.id %>/submit" method="post" data-auto-submit>
+            <% quiz.questions.forEach(function(question, iter) { %>
+                <div class="question-card">
+                    <p style="margin: 0 0 16px; font-size:15px;">
+                        <strong><span><%= (iter + 1) %></span>. <span><%= question.questionText %></span></strong>
+                    </p>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <label class="choice">
+                            <input type="radio" name="question_<%= question.id %>" value="A" required/>
+                            <span><strong>A.</strong> <%= question.optionA %></span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="question_<%= question.id %>" value="B"/>
+                            <span><strong>B.</strong> <%= question.optionB %></span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="question_<%= question.id %>" value="C"/>
+                            <span><strong>C.</strong> <%= question.optionC %></span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="question_<%= question.id %>" value="D"/>
+                            <span><strong>D.</strong> <%= question.optionD %></span>
+                        </label>
+                    </div>
+                </div>
+            <% }); %>
+            <div style="margin-top:28px;">
+                <button class="btn" type="submit">Submit assessment &rarr;</button>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/app.js"></script>

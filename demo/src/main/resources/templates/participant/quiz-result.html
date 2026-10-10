@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Result · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a class="active" th:href="@{/quizzes}">Quizzes</a>
+        <a th:href="@{/participant/history}">History</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button class="linkish" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>
+<main class="page">
+    <div class="card" style="text-align:center; max-width:580px; margin:auto; padding:48px 36px;">
+        <div class="kicker">
+            <span class="kicker-dot"></span>
+            <span>Attempt complete</span>
+        </div>
+        <h2 th:text="${quiz.title}">Quiz Title</h2>
+        <p class="muted" style="margin-top:4px;">Assessment completed and graded.</p>
+        
+        <div style="margin:32px auto; padding:28px; background:linear-gradient(135deg, rgba(240,253,250,0.7), rgba(255,255,255,0.85)); border:1px solid rgba(13,148,136,0.2); border-radius:24px; max-width:320px; box-shadow: 0 10px 25px -5px rgba(13,148,136,0.1);">
+            <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted);">Final Score</span>
+            <h1 style="font-size:56px; margin:10px 0; color:var(--accent);">
+                <span th:text="${score}">0</span>
+                <span style="color:var(--text-muted); font-size:32px; font-weight:400;">/</span>
+                <span style="color:var(--text-main); font-size:36px;" th:text="${totalQuestions}">0</span>
+            </h1>
+            <p style="margin:0; font-size:13px; font-weight:600; color:var(--ok);">
+                <span th:text="${totalQuestions > 0 ? (score * 100 / totalQuestions) : 0}">0</span>% Accuracy
+            </p>
+        </div>
+
+        <div class="actions" style="justify-content:center; margin-top:28px;">
+            <a class="btn" th:href="@{/quizzes}">Explore more quizzes &rarr;</a>
+            <a class="btn secondary" th:href="@{/participant/history}">Transcript & history</a>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

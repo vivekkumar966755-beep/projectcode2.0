@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title><%= typeof title !== 'undefined' ? title + ' · ' : '' %>Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" href="/">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a href="/" class="<%= (typeof active !== 'undefined' && active === 'home') ? 'active' : '' %>">Home</a>
+        <% if (locals.currentUser) { %>
+            <a href="/quizzes" class="<%= (typeof active !== 'undefined' && active === 'quizzes') ? 'active' : '' %>">Quizzes</a>
+            <% if (locals.currentUser.role === 'ADMIN') { %>
+                <a href="/admin/dashboard" class="<%= (typeof active !== 'undefined' && active === 'admin') ? 'active' : '' %>">Admin</a>
+            <% } %>
+            <% if (locals.currentUser.role === 'CREATOR' || locals.currentUser.role === 'ADMIN') { %>
+                <a href="/creator/dashboard" class="<%= (typeof active !== 'undefined' && active === 'creator') ? 'active' : '' %>">Creator</a>
+            <% } %>
+            <a href="/participant/history" class="<%= (typeof active !== 'undefined' && active === 'history') ? 'active' : '' %>">History</a>
+            
+            <div class="user-indicator" style="margin-left:8px;">
+                <span class="user-avatar"><%= locals.currentUser.name.charAt(0).toUpperCase() %></span>
+                <span><%= locals.currentUser.name.split(' ')[0] %></span>
+            </div>
+            
+            <form action="/logout" method="post" style="margin:0;">
+                <button class="linkish" type="submit" title="Sign out of account">Sign out</button>
+            </form>
+        <% } else { %>
+            <a href="/login" class="<%= (typeof active !== 'undefined' && active === 'login') ? 'active' : '' %>">Sign in</a>
+            <a href="/register" class="btn" style="padding:7px 18px; font-size:13px; margin-left:6px;">Join &rarr;</a>
+        <% } %>
+    </nav>
+</header>

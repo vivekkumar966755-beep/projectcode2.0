@@ -1,0 +1,96 @@
+<%- include('partials/header', { title: 'Home', active: 'home' }) %>
+<main class="page">
+    <section class="hero">
+        <div>
+            <div class="kicker">
+                <span class="kicker-dot"></span>
+                <span>Role-based quiz platform</span>
+            </div>
+            <h1>Design, approve, and sit exams with <span class="highlight">quiet precision.</span></h1>
+            <p class="lead">Apex Quiz gives administrators control, creators a studio, and participants a focused exam room — all behind structured role-based access.</p>
+            <div class="actions">
+                <% if (!locals.currentUser) { %>
+                    <a class="btn" href="/register">Create your workspace &rarr;</a>
+                    <a class="btn secondary" href="/login">Sign in</a>
+                <% } else { %>
+                    <a class="btn" href="/quizzes">Enter the exam hall &rarr;</a>
+                    <% if (locals.currentUser.role === 'ADMIN') { %>
+                        <a class="btn secondary" href="/admin/dashboard">Admin dashboard</a>
+                    <% } else if (locals.currentUser.role === 'CREATOR') { %>
+                        <a class="btn secondary" href="/creator/dashboard">Creator studio</a>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <div class="hero-panel">
+            <div class="panel-header">
+                <span class="panel-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </span>
+                <span>Three roles. One platform.</span>
+            </div>
+            <ul>
+                <li>
+                    <span class="bullet-dot"></span>
+                    <span><strong>Admin</strong> &mdash; approve quizzes, manage users, watch the live catalog.</span>
+                </li>
+                <li>
+                    <span class="bullet-dot"></span>
+                    <span><strong>Creator</strong> &mdash; compose assessments and submit them for review.</span>
+                </li>
+                <li>
+                    <span class="bullet-dot"></span>
+                    <span><strong>Participant</strong> &mdash; take published quizzes and keep a score history.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Platform Highlights Section -->
+    <section style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div class="card" style="padding: 28px 24px;">
+            <div class="panel-icon" style="margin-bottom: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 8px; font-size: 16px;">Moderated Quality</h3>
+            <p class="muted" style="margin: 0; font-size: 13.5px; line-height: 1.55;">
+                Every assessment undergoes administrator review before entering the catalog to ensure pedagogical rigor.
+            </p>
+        </div>
+
+        <div class="card" style="padding: 28px 24px;">
+            <div class="panel-icon" style="margin-bottom: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 8px; font-size: 16px;">Automated Timers</h3>
+            <p class="muted" style="margin: 0; font-size: 13.5px; line-height: 1.55;">
+                Real-time browser countdowns automatically submit attempts upon expiration, maintaining exam fidelity.
+            </p>
+        </div>
+
+        <div class="card" style="padding: 28px 24px;">
+            <div class="panel-icon" style="margin-bottom: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 8px; font-size: 16px;">Instant Scoring</h3>
+            <p class="muted" style="margin: 0; font-size: 13.5px; line-height: 1.55;">
+                Submissions are graded immediately with detailed score transcripts and percentage accuracy metrics.
+            </p>
+        </div>
+    </section>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,52 @@
+<%- include('../partials/header', { title: 'History', active: 'history' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Transcript</span>
+                </div>
+                <h2>Your assessment history</h2>
+            </div>
+            <a class="btn" href="/quizzes">Take a quiz &rarr;</a>
+        </div>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Assessment Title</th>
+                    <th>Score</th>
+                    <th>Accuracy</th>
+                    <th style="text-align:right;">Attempt Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% results.forEach(function(res) { %>
+                    <tr>
+                        <td><strong><%= res.quiz ? res.quiz.title : '—' %></strong></td>
+                        <td>
+                            <span class="badge ok" style="font-weight:700;">
+                                <%= res.score %> / <%= res.totalQuestions %>
+                            </span>
+                        </td>
+                        <td class="muted">
+                            <span style="font-weight:600; color:var(--text-main);">
+                                <%= Math.round((res.score / (res.totalQuestions || 1)) * 100) %>%
+                            </span>
+                        </td>
+                        <td class="muted" style="text-align:right;"><%= res.formattedDate %></td>
+                    </tr>
+                <% }); %>
+                <% if (results.length === 0) { %>
+                    <tr>
+                        <td colspan="4" class="empty">No past attempts recorded. Select a quiz to begin!</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>

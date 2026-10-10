@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Sign in · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body class="auth-wrap">
+    <div class="auth-card">
+        <a href="/" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:24px; color:var(--muted); font-size:13px; font-weight:600;">
+            <span class="brand-mark" style="width:28px; height:28px; font-size:11px; border-radius:8px;">AQ</span>
+            <span>Apex Quiz</span>
+        </a>
+        <div class="kicker">
+            <span class="kicker-dot"></span>
+            <span>Welcome back</span>
+        </div>
+        <h2>Sign in to Apex Quiz</h2>
+        <p class="muted">Use your registered account to continue.</p>
+        <% if (locals.error) { %>
+            <div class="notice error"><%= locals.error %></div>
+        <% } %>
+        <% if (locals.logout) { %>
+            <div class="notice ok">You have been signed out.</div>
+        <% } %>
+        <% if (locals.success) { %>
+            <div class="notice ok"><%= locals.success %></div>
+        <% } %>
+        <form action="/login" method="post" class="form-grid" style="margin-top:20px;">
+            <div>
+                <label for="username">Email address</label>
+                <input id="username" type="email" name="username" placeholder="you@company.com" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="••••••••" required/>
+            </div>
+            <button class="btn" type="submit" style="width:100%; margin-top:8px;">Continue &rarr;</button>
+        </form>
+        <p class="muted" style="margin-top:24px; text-align:center; font-size:14px;">
+            New to Apex Quiz? <a href="/register" style="font-weight:600;">Create an account</a>
+        </p>
+        <div style="margin-top:20px; padding:12px; background:rgba(241,245,249,0.7); border-radius:12px; font-size:12px; color:var(--muted); text-align:center;">
+            Seed admin: <strong>admin@quizplatform.local</strong>
+        </div>
+    </div>
+</body>
+</html>

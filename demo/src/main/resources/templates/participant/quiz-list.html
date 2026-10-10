@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Available quizzes · Apex Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body class="app-shell">
+<header class="topbar">
+    <a class="brand" th:href="@{/}">
+        <span class="brand-mark">AQ</span>
+        <span>Apex Quiz</span>
+    </a>
+    <nav class="nav-links">
+        <a th:href="@{/}">Home</a>
+        <a class="active" th:href="@{/quizzes}">Quizzes</a>
+        <a th:href="@{/participant/history}">History</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button class="linkish" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Exam hall</span>
+                </div>
+                <h2>Published quizzes</h2>
+            </div>
+            <a class="btn secondary" th:href="@{/participant/history}">Transcript & history &rarr;</a>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Duration</th>
+                    <th style="text-align:right;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="quiz : ${quizzes}">
+                    <td><strong th:text="${quiz.title}">Title</strong></td>
+                    <td class="muted" th:text="${quiz.creator != null ? quiz.creator.name : 'Faculty'}">Faculty</td>
+                    <td>
+                        <span class="badge" style="font-weight:500;">
+                            ⏱ <span th:text="${quiz.duration}">15</span> min
+                        </span>
+                    </td>
+                    <td style="text-align:right;">
+                        <a class="btn" th:href="@{'/quizzes/' + ${quiz.id} + '/take'}" style="padding:8px 22px; font-size:13px;">Start exam &rarr;</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(quizzes)}">
+                    <td colspan="4" class="empty">Nothing published yet. Check back after review.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    Apex Quiz · Role-based assessments for teams that take learning seriously.
+</footer>
+</body>
+</html>

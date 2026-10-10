@@ -1,0 +1,15 @@
+<%- include('partials/header', { title: 'Notice', active: 'home' }) %>
+<main class="page">
+    <div class="card" style="text-align:center; max-width:540px; margin:auto; padding:48px 32px;">
+        <div class="kicker">
+            <span class="kicker-dot" style="background:var(--danger);"></span>
+            <span style="color:var(--danger);">Notice</span>
+        </div>
+        <h2>Something interrupted this request.</h2>
+        <p class="lead" style="font-size:15px; margin-top:8px;">You may not have permission to view this resource, or the requested page was not found.</p>
+        <div class="actions" style="justify-content:center; margin-top:28px;">
+            <a class="btn" href="/">&larr; Return to Home</a>
+        </div>
+    </div>
+</main>
+<%- include('partials/footer') %>

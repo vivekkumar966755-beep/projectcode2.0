@@ -1,0 +1,71 @@
+<%- include('../partials/header', { title: 'Users', active: 'admin' }) %>
+<main class="page">
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <div class="kicker">
+                    <span class="kicker-dot"></span>
+                    <span>Directory</span>
+                </div>
+                <h2>People on the platform</h2>
+            </div>
+            <a class="btn secondary" href="/admin/dashboard">&larr; Dashboard</a>
+        </div>
+        <% if (locals.success) { %>
+            <div class="notice ok">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><%= locals.success %></span>
+            </div>
+        <% } %>
+        <% if (locals.error) { %>
+            <div class="notice error">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span><%= locals.error %></span>
+            </div>
+        <% } %>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email address</th>
+                    <th>Assigned Role</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% users.forEach(function(u) { %>
+                    <tr>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <div class="user-avatar" style="width:28px; height:28px; font-size:12px;">
+                                    <%= u.name.charAt(0).toUpperCase() %>
+                                </div>
+                                <strong><%= u.name %></strong>
+                            </div>
+                        </td>
+                        <td class="muted"><%= u.email %></td>
+                        <td>
+                            <span class="badge <%= u.role === 'ADMIN' ? 'ok' : (u.role === 'CREATOR' ? 'warn' : '') %>">
+                                <%= u.role %>
+                            </span>
+                        </td>
+                        <td style="text-align:right;">
+                            <form action="/admin/users/delete/<%= u.id %>" method="post" onsubmit="return confirm('Remove user <%= u.name %>?');" style="display:inline;">
+                                <button class="btn danger" type="submit" style="padding:6px 14px; font-size:12px;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+                <% if (users.length === 0) { %>
+                    <tr>
+                        <td colspan="4" class="empty">No users found on the platform.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer') %>
